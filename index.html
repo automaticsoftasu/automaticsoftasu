@@ -1,0 +1,500 @@
+<!DOCTYPE html><html lang="ro">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pînda Security — Servicii de pază, monitorizare & intervenție în Cluj-Napoca</title>
+  <meta name="description" content="Pînda Security oferă pază umană,transport valori, monitorizare 24/7, intervenție rapidă și instalare sisteme de securitate în Cluj-Napoca." />
+  <meta name="theme-color" content="#1e66ff" />
+  <link rel="preconnect" href="https://images.unsplash.com">
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#0b1f33;
+      --brand:#1e66ff;
+      --brand-2:#0ea5e9;
+      --accent:#ffd166;
+      --card-bg:#ffffff;
+      --card-line:#e6edf5;
+      --muted:#5a6b7c;
+      --link:#1e66ff;
+      /* înălțimi măsurate runtime */
+      --callbar-h:0px;
+      --header-h:0px;
+      --top-offset:0px; /* callbar + header */
+    }
+
+    *{box-sizing:border-box}
+    html,body{margin:0;min-height:100%;height:auto;scroll-behavior:smooth;font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Ubuntu,'Helvetica Neue',Arial;overflow-y:auto;touch-action:pan-y; -webkit-overflow-scrolling: touch; overscroll-behavior:auto}
+    /* ancorele vor ține cont de barele fixe */
+    html{ scroll-padding-top: var(--top-offset); }
+    body{background:var(--bg); color:var(--text); line-height:1.6; padding-top: var(--top-offset);}
+
+    a{color:var(--link); text-decoration:none}
+    img{max-width:100%; display:block}
+    .container{max-width:1120px; margin:0 auto; padding:0 16px}
+
+    /* ======= BARA DE TELEFON (CALLBAR) — FIXĂ ======= */
+    .callbar{ position:fixed; top:0; left:0; right:0; z-index:1200; background:var(--brand); color:#fff; border-bottom:1px solid color-mix(in oklab, var(--brand) 70%, #000 30%); }
+    .callbar-row{ display:flex; align-items:center; justify-content:space-between; gap:12px; padding:10px 0; }
+    @supports (padding: max(0px)){
+      .callbar-row{ padding-top: calc(10px + env(safe-area-inset-top)); }
+    }
+    .call-cta{ display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.2px; }
+    .call-cta svg{ width:22px; height:22px; flex:0 0 auto; }
+    .calltext strong{ font-size: clamp(18px,2.2vw,22px); font-variant-numeric: tabular-nums; }
+    .btn.small{ padding:10px 14px; border-radius:12px; font-weight:800; }
+    .call-actions{ display:none; gap:8px; flex-wrap:wrap; }
+    @media (max-width:640px){ .calltext{ display:none } .call-actions{ display:flex } }
+
+    /* ======= HEADER / MENIU — FIX ======= */
+    header{
+      position:fixed; top:var(--callbar-h); left:0; right:0; z-index:1100;
+      background:rgba(255,255,255,.95);
+      backdrop-filter: blur(8px); border-bottom:1px solid #e9eef6;
+      box-shadow:0 4px 16px rgba(17,24,39,.06);
+    }
+    .nav{display:flex; align-items:center; justify-content:space-between; padding:12px 0; gap:12px}
+    .brand{display:flex; align-items:center; gap:12px}
+    .logo{display:flex;gap:10px;align-items:center;font-weight:700;color:#0b1f33}
+    .badge{font-size:12px;padding:2px 8px;border-radius:999px;background:#eaf2ff;color:var(--brand);border:1px solid #d7e6ff}
+
+    /* --- MENIU (desktop) --- */
+    .menu-desktop{display:flex;gap:18px;flex-wrap:wrap;align-items:center}
+    .menu-desktop a{color:#0b1f33;opacity:.85}
+    .menu-desktop a:hover,.menu-desktop a:focus-visible{opacity:1}
+
+    /* --- Buton hamburger (pe STÂNGA, lângă logo) --- */
+    .burger{display:none; align-items:center; justify-content:center; gap:8px; padding:10px; border-radius:12px; border:1px solid #e6edf5; background:#fff; color:#0b1f33}
+    .burger svg{width:22px;height:22px}
+
+    @media (max-width:900px){ .menu-desktop{display:none} .burger{display:inline-flex} .cta-desktop{display:none} }
+    @media (min-width:901px){ .burger{display:none} .menu-desktop{display:flex} .cta-desktop{display:inline-flex} }
+
+    /* ======= DRAWER mobil (slide-in stânga) ======= */
+    .drawer{position:fixed; inset:0; z-index:2000; display:none}
+    .drawer[data-open="true"]{display:block}
+    .drawer .backdrop{position:absolute; inset:0; background:rgba(15,23,42,.45); opacity:0; transition:opacity .32s ease}
+    .drawer .sheet{position:absolute; top:0; left:0; bottom:0; width:min(420px, 88vw); background:#fff; border-radius:0 16px 16px 0; padding:18px 18px 24px; overflow:auto; -webkit-overflow-scrolling: touch; box-shadow:20px 0 60px rgba(0,0,0,.25); transform:translateX(-104%); will-change:transform; transition:transform .38s cubic-bezier(.2,.8,.2,1)}
+    .drawer[data-open="true"] .sheet{transform:translateX(0)}
+    .drawer .close{position:absolute; top:8px; right:10px; width:40px; height:40px; display:grid; place-items:center; border-radius:12px; border:1px solid #e6edf5; background:#fff; opacity:0; transform:scale(.96); transition:opacity .28s ease .12s, transform .28s ease .12s}
+    .drawer nav{display:flex; flex-direction:column; gap:4px; margin-top:6px}
+    .drawer nav a{display:block; padding:14px 8px; font-size:18px; color:#0b1f33; opacity:1; transform:none; transition:opacity .2s ease, transform .2s ease}
+
+    :focus-visible{outline:2px solid var(--brand); outline-offset:2px}
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+    /* ======= SECTIONS & UI ======= */
+    section{padding:64px 0; border-top:1px solid var(--card-line)}
+    .theme-light{--section-bg:#ffffff;--section-text:#0b1f33;--card-bg:#ffffff;--card-line:#e6edf5;--muted:#5a6b7c;--link:var(--brand)}
+    .theme-blue{--section-bg:#0e3a8a;--section-text:#ffffff;--card-bg:rgba(255,255,255,.08);--card-line:rgba(255,255,255,.18);--muted:#e6f0ff;--link:#b8d4ff}
+    .theme-dark{--section-bg:#0b0f17;--section-text:#ffffff;--card-bg:#121826;--card-line:rgba(255,255,255,.18);--muted:#c8d3e1;--link:#9fc8ff}
+
+    .theme-light, .theme-blue, .theme-dark{background:var(--section-bg); color:var(--section-text)}
+    .theme-light a, .theme-blue a, .theme-dark a{color:var(--link)}
+
+    h1{font-size: clamp(28px, 4.2vw, 56px); line-height:1.1; margin:0 0 12px}
+    h2{font-size: clamp(22px, 3vw, 36px); margin:0 0 10px}
+    .lead{color:var(--muted); font-size:clamp(16px,1.6vw,20px)}
+    .muted{color:var(--muted)}
+
+    .grid{display:grid; gap:18px}
+    .grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+    @media (max-width:900px){ .grid-3{grid-template-columns:1fr 1fr} }
+    @media (max-width:640px){ .grid-3,.grid-2{grid-template-columns:1fr} }
+
+    .card{background:var(--card-bg); border:1px solid var(--card-line); padding:22px; border-radius:16px; box-shadow:0 6px 18px rgba(17,24,39,.05)}
+    .service{display:flex; gap:14px}
+    .icon{width:42px;height:42px;border-radius:10px;display:grid;place-items:center;background:color-mix(in oklab, var(--card-bg) 70%, #ffffff 30%);border:1px solid var(--card-line);color:var(--link);flex:0 0 auto}
+    .icon svg{width:22px;height:22px}
+
+    .kpi{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+    .pill{padding:8px 12px;border-radius:999px;background:color-mix(in oklab, var(--card-bg) 85%, #ffffff 15%);border:1px solid var(--card-line);font-size:14px}
+
+    .gallery img{border:1px solid var(--card-line); border-radius:16px}
+
+    .contact{display:grid; gap:22px; grid-template-columns:2fr 1fr}
+    @media (max-width:900px){ .contact{grid-template-columns:1fr} }
+
+    footer{padding:38px 0; color:#566b80; font-size:14px; border-top:1px solid #e6edf5; background:#fafcff}
+    .credits a{color:var(--brand)}
+    .tag{font-weight:700;color:var(--brand-2)}
+    .ribbon{color:#111;background:var(--accent);font-weight:800;padding:2px 8px;border-radius:8px}
+
+    .list{display:grid; gap:8px; margin:10px 0 0 0; padding:0; list-style:none}
+    .list li{display:flex; gap:10px; align-items:flex-start}
+    .list svg{flex:0 0 auto; margin-top:3px}
+
+    .hero{position:relative; min-height:72vh; display:grid; place-items:center; text-align:center; overflow:hidden}
+    .hero::before{content:""; position:absolute; inset:0; pointer-events:none; background-image:url('sigla.jpeg'); background-size:contain; background-position:center; opacity:.08; filter:saturate(1.05) contrast(1.05)}
+    .hero > .container{position:relative; padding:72px 16px}
+    .hero h1{color:#ffffff}
+    .hero .lead{color:#ffffff}
+    .theme-blue .lead{color:#ffffff}
+    .theme-blue .muted{color:#f6f9ff}
+    .theme-blue .pill{color:#ffffff;background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.32)}
+    .theme-blue .icon{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.32);color:#ffffff}
+  /* === FIX: X vizibil în meniul mobil === */
+    .drawer[data-open="true"] .close{opacity:1; transform:scale(1);}
+
+    /* === FIX: arată numerele pe mobil/tabletă (mărim pragul) === */
+    @media (max-width:900px){
+      .calltext{ display:none !important; }
+      .call-actions{ display:flex !important; }
+    }
+
+    /* === Vizibilitate butoane telefon pe bara albastră === */
+    .callbar .btn, .callbar .btn.ghost{
+      background:transparent !important;
+      color:#fff !important;
+      border:1px solid rgba(255,255,255,.65) !important;
+      box-shadow:none !important;
+    }
+    .callbar .btn.small{ padding:8px 12px; border-radius:10px; }
+  /* === Mobile: aliniere numere lângă iconița de telefon (stânga) === */
+    @media (max-width:900px){
+      .callbar-row{ justify-content:flex-start; gap:8px; flex-wrap:wrap; }
+      .call-cta{ display:flex; align-items:center; gap:8px; }
+      .call-actions{ display:flex !important; margin-left:8px; gap:8px; }
+      .call-actions .btn{ padding:8px 10px; border-radius:10px; }
+      .call-actions a{ white-space:nowrap; }
+    }
+  </style>
+</head>
+<body>
+<!-- ====== CALLBAR FIXĂ ====== -->
+<div class="callbar" role="region" aria-label="Apel rapid">
+  <div class="container callbar-row">
+    <div class="call-cta">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M2 4c0-1.1.9-2 2-2h2c.9 0 1.7.6 1.9 1.5l.6 2.4c.2.8-.1 1.6-.7 2.1L7 9c1.4 2.8 3.7 5.1 6.5 6.5l.9-1c.5-.6 1.3-.9 2.1-.7l2.4.6c.9.2 1.5 1 1.5 1.9V18c0 1.1-.9 2-2 2h-1C9.3 20 4 14.7 4 8V6c0-1.1.9-2 2-2H4z" stroke="#ffffff" stroke-width="1.5"/></svg>
+      <span class="calltext">Sună acum: <strong dir="ltr">0745 439 322</strong> • <strong dir="ltr">0766 757 075</strong></span>
+    </div>
+    <div class="call-actions" aria-label="Apelează rapid">
+      <a class="btn small" href="tel:+40745439322" aria-label="Sună 0745 439 322">0745 439 322</a>
+      <a class="btn small ghost" href="tel:+40766757075" aria-label="Sună 0766 757 075">0766 757 075</a>
+    </div>
+  </div>
+</div>
+
+<!-- ====== HEADER FIX ====== -->
+<header>
+  <div class="container nav">
+    <div class="brand">
+      <button class="burger" type="button" aria-expanded="false" aria-controls="mobile-drawer" aria-label="Deschide meniul">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <span class="sr-only">Meniu</span>
+      </button>
+      <a href="#acasa" class="logo" aria-label="Acasă — Pînda Security">
+        <img src="sigla.jpeg" height="48" width="48" alt="Sigla Pînda Security">
+        <span>Pînda Security</span>
+       
+      </a>
+    </div>
+
+    <!-- Desktop -->
+    <nav class="menu-desktop" aria-label="Principal">
+      <a href="#despre">Despre</a>
+      <a href="#servicii">Servicii</a>
+      <a href="#avantaje">Avantaje</a>
+      <a href="#licente">Licențe</a>
+      <a href="#galerie">Galerie</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <!-- CTA vizibil doar pe desktop -->
+    <a class="btn cta-desktop" href="#contact" aria-label="Cere ofertă">Cere ofertă</a>
+  </div>
+</header>
+
+<section class="hero theme-blue" id="acasa">
+  <div class="container">
+    <span class="ribbon">Ochii mari la pîndă!</span>
+    <h1>Siguranță 24/7 pentru locuințe și afaceri </h1>
+    <p class="lead">Pază umană,transport valori si numerar cu masini blindate, monitorizare profesională din dispecerat, securitate evenimente, intervenție operativă pe cartiere, instalare sisteme moderne de alarmă, video și control acces.</p>
+    <div class="cta">
+      <a class="btn" href="#servicii">Vezi servicii</a>
+      <a class="btn ghost" href="#contact">Contact rapid</a>
+    </div>
+    <div class="kpi">
+      <span class="pill"> Peste 25 ani tradiție în grup</span>
+      <span class="pill"> Dispecerat 24/7</span>
+      <span class="pill"> Intervenție si monitorizare</span>
+      <span class="pill"> Paza umana</span>
+      <span class="pill"> Transport valori si numerar</span>
+      <span class="pill"> Supraveghere video </span>
+      <span class="pill"> Detectoare incendiu</span>
+      <span class="pill"> Automatizari porti</span>
+      <span class="pill"> Sisteme video interfon</span>
+      <span class="pill"> Control acces</span>
+      <span class="pill"> Mentenanta tehnica </span>
+    </div>
+  </div>
+</section>
+
+<section id="despre" class="theme-light">
+  <div class="container">
+    <h2>Despre <span class="tag">Pînda Security</span></h2>
+    <p class="muted">Pînda Security este un brand cu tradiție de peste 25 de ani în servicii de securitate în Cluj-Napoca. Oferim soluții complete, personalizate, integrate si de incredere pentru protejarea afacerii, locuintei si evenimentelor dumneavoastra : proiectare, instalare, mentenanta, monitorizare și intervenție.</p>
+    <div class="kpi">
+      <span class="pill">Adresa: str. Republicii nr.5, Cluj-Napoca</span>
+      <span class="pill">Tel: +40745439322</span><span class="pill">email: office@asu.ro</span>
+    </div>
+  </div>
+</section>
+
+<section id="servicii" class="theme-blue">
+  <div class="container">
+    <h2>Servicii</h2>
+    <div class="grid grid-3">
+      <div class="card service">
+        <div class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M12 3l8 4v5c0 5-3 8-8 9-5-1-8-4-8-9V7l8-4z" stroke="currentColor" stroke-width="1.5"/></svg>
+        </div>
+        <div>
+          <h3>Pază umană</h3>
+          <p class="muted">Agenți instruiți pentru obiective rezidențiale, comerciale și industriale.</p>
+        </div>
+      </div>
+      <div class="card service">
+        <div class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="12" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M8 20h8" stroke="currentColor" stroke-width="1.5"/></svg>
+        </div>
+        <div>
+          <h3>Monitorizare 24/7</h3>
+          <p class="muted">Dispecerat non-stop pentru sisteme de alarmă și CCTV, cu verificare și triere evenimente.</p>
+        </div>
+      </div>
+      <div class="card service">
+        <div class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M4 16l2-6a3 3 0 012.8-2h6.4A3 3 0 0118 10l2 6" stroke="currentColor" stroke-width="1.5"/><circle cx="7.5" cy="17.5" r="1.5" fill="currentColor"/><circle cx="16.5" cy="17.5" r="1.5" fill="currentColor"/></svg>
+        </div>
+        <div>
+          <h3>Intervenție rapidă</h3>
+          <p class="muted">Echipaje proprii pe cartiere în Cluj-Napoca pentru deplasare imediată.</p>
+        </div>
+      </div>
+      <div class="card service">
+        <div class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="7" width="12" height="8" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M15 9l6-3v10l-6-3V9z" stroke="currentColor" stroke-width="1.5"/></svg>
+        </div>
+        <div>
+          <h3>Supraveghere video (CCTV)</h3>
+          <p class="muted">Proiectare și instalare sisteme video IP, analiză video și acces la distanță.</p>
+        </div>
+      </div>
+      <div class="card service">
+        <div class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M7 19h10l1-8a6 6 0 10-12 0l1 8z" stroke="currentColor" stroke-width="1.5"/><path d="M3 12h2M19 12h2M12 3v2M5 5l1.5 1.5M19 5L17.5 6.5" stroke="currentColor" stroke-width="1.5"/></svg>
+        </div>
+        <div>
+          <h3>Sisteme de alarmă</h3>
+          <p class="muted">Soluții cablate & wireless, anti-efracție, buton panică și integrare cu dispecerat.</p>
+        </div>
+      </div>
+
+      <div class="card service">
+        <div class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M4 16l1.8-5.4A3 3 0 019.5 8h5A3 3 0 0117.8 9.8L20 16" stroke="currentColor" stroke-width="1.5"/><circle cx="7.5" cy="17.5" r="1.5" fill="currentColor"/><circle cx="16.5" cy="17.5" r="1.5" fill="currentColor"/></svg>
+        </div>
+        <div>
+          <h3>Transport valori</h3>
+          <p class="muted">transport valori si numerar cu vehicule blindate si echipaje specializate.</p>
+        </div>
+      </div>
+
+      <div class="card service">
+        <div class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="6" width="18" height="12" rx="2" stroke="currentColor" stroke-width="1.5"/><rect x="6" y="10" width="6" height="2" fill="currentColor"/></svg>
+        </div>
+        <div>
+          <h3>Control acces</h3>
+          <p class="muted">Uși și porți cu card, interfonie, pontaj și management vizitatori.</p>
+        </div>
+      </div>
+      <div class="card service">
+        <div class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M12 3s2 2 2 4a4 4 0 11-8 0c0 3 2 5 2 7a4 4 0 108 0c0-3-2-5-4-7z" stroke="currentColor" stroke-width="1.5"/></svg>
+        </div>
+        <div>
+          <h3>Detectoare si sisteme de alarma incendiu</h3>
+          <p class="muted"> instalare sisteme detectie si alarmare incendiu.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="avantaje" class="theme-dark">
+  <div class="container">
+    <h2>De ce noi</h2>
+    <div class="grid grid-2">
+      <div class="card">
+        <h3>Experiență & acoperire locală</h3>
+        <ul class="list">
+          <li>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 6l-11 11L4 12" stroke="currentColor" stroke-width="2"/></svg>
+            Tradiție de peste 25 ani la nivel de grup și echipaje poziționate pe cartiere.
+          </li>
+          <li>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 6l-11 11L4 12" stroke="currentColor" stroke-width="2"/></svg>
+            Dispecerat propriu 24/7 cu triere profesională a alarmelor.
+          </li>
+          <li>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 6l-11 11L4 12" stroke="currentColor" stroke-width="2"/></svg>
+            Soluții la cheie: proiectare, instalare, mentenanță, monitorizare & intervenție.
+          </li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Transparență</h3>
+        <p class="muted">Companie licențiată conform Legii 333/2003. Documentele și atestatele pot fi puse la dispoziție la cerere.</p>
+        <div class="btn-row" style="margin-top:10px">
+          <a class="btn ghost" href="#contact">Solicită verificare licențe</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="galerie" class="theme-light">
+  <div class="container">
+    <h2>Galerie</h2>
+    <div class="grid grid-3 gallery">
+      <img src="gardian.jpg" alt="Gardian" loading="lazy">
+      <img src="camere.jpg" alt="Dispecerat de monitorizare cu multiple ecrane" loading="lazy">
+      <img src="gardian2.webp" alt="Agent de securitate în patrulare" loading="lazy">
+      <img src="poza1.jpeg" alt="Dispecerat de monitorizare cu multiple ecrane" loading="lazy">
+      <img src="poza2.jpeg" alt="Dispecerat de monitorizare cu multiple ecrane" loading="lazy">
+      <img src="poza3.jpeg" alt="Dispecerat de monitorizare cu multiple ecrane" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<section id="licente" class="theme-blue">
+  <div class="container">
+    <h2>Licențe & conformitate</h2>
+    <div class="grid grid-2">
+      <div class="card">
+        <h3>Legea 333/2003</h3>
+        <p class="muted">Respectăm cadrul legal în vigoare privind paza obiectivelor, bunurilor, valorilor și protecția persoanelor.</p>
+      </div>
+      <div class="card">
+        <h3>Listă companii licențiate IGPR</h3>
+        <p class="muted">PÎNDA  SECURITY S.R.L. figurează în evidența companiilor licențiate (IGPR). Se poate verifica în lista publică.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="contact theme-dark">
+  <div class="container">
+    <div>
+      <h2>Contact</h2>
+      <p class="muted">Hai să discutăm despre nevoile tale de securitate.</p>
+      <div class="card">
+        <ul class="list">
+          <li>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2l7 7-7 13-7-13 7-7z" stroke="currentColor" stroke-width="1.5"/></svg>
+            str. Republicii nr.5, Cluj-Napoca
+          </li>
+          <li>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 4h12v16H6z" stroke="currentColor" stroke-width="1.5"/><path d="M6 7l6 5 6-5" stroke="currentColor" stroke-width="1.5"/></svg>
+            Email: <a href="mailto:office@asu.ro">office@asu.ro</a> 
+          </li>
+          <li>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 2h12v6H6zM6 12h12v10H6z" stroke="currentColor" stroke-width="1.5"/></svg>
+            Telefon: <a href="tel:+40745439322">+40 745439322</a><a style="margin-left:8px" href="tel:+40766757075">+40 766757075</a>
+          </li>
+          <li>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 11l9-7 9 7v8a2 2 0 01-2 2H5a2 2 0 01-2-2v-8z" stroke="currentColor" stroke-width="1.5"/></svg>
+            Program: Luni–Vineri 08:00–20:00 (exemplu)
+          </li>
+        </ul>
+        <div class="cta" style="justify-content:flex-start;margin-top:16px">
+          <a class="btn" href="mailto:office@asu.ro?subject=Cerere%20ofert%C4%83">office@asu.ro</a>
+          <a class="btn ghost" href="tel:+40745439322">Sună acum</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="credits">
+      © <span id="y"></span> Pînda Security. Toate drepturile rezervate.
+    </div>
+  </div>
+</footer>
+
+<!-- Drawer mobil plasat la finalul <body> -->
+<div id="mobile-drawer" class="drawer" aria-hidden="true" role="dialog" aria-modal="true" data-open="false">
+  <div class="backdrop" data-close></div>
+  <div class="sheet" role="document">
+    <button class="close" type="button" aria-label="Închide meniul" data-close>
+      <svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+    <nav aria-label="Meniu mobil">
+      <a href="#despre">Despre</a>
+      <a href="#servicii">Servicii</a>
+      <a href="#avantaje">Avantaje</a>
+      <a href="#licente">Licențe</a>
+      <a href="#galerie">Galerie</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="btn" href="#contact" aria-label="Cere ofertă">Cere ofertă</a>
+  </div>
+</div>
+
+<script>
+// 1) An — Year in footer
+(function(){
+  var yEl = document.getElementById('y');
+  if(yEl) yEl.textContent = new Date().getFullYear();
+})();
+</script>
+<script>
+// 2) Calculează înălțimile callbar + header și aplică offset de conținut și ancore
+(function(){
+  var root = document.documentElement;
+  function updateOffsets(){
+    var cb = document.querySelector('.callbar');
+    var hd = document.querySelector('header');
+    var cbh = cb ? cb.getBoundingClientRect().height : 0;
+    var hhh = hd ? hd.getBoundingClientRect().height : 0;
+    root.style.setProperty('--callbar-h', cbh + 'px');
+    root.style.setProperty('--header-h',  hhh + 'px');
+    root.style.setProperty('--top-offset', (cbh + hhh) + 'px');
+  }
+  window.addEventListener('load', updateOffsets);
+  window.addEventListener('resize', function(){ setTimeout(updateOffsets, 50); });
+  // iOS safe-area changes on orientation
+  window.matchMedia && window.matchMedia('(orientation: portrait)').addEventListener('change', function(){ setTimeout(updateOffsets, 50); });
+})();
+</script>
+<script>
+// 3) Drawer mobil: deschidere/închidere + închidere pe click pe link (fără blocare scroll body)
+(function(){
+  var drawer = document.getElementById('mobile-drawer');
+  var burger = document.querySelector('.burger');
+  if(!drawer || !burger) return;
+  function open(){ drawer.dataset.open = 'true'; drawer.setAttribute('aria-hidden','false'); burger.setAttribute('aria-expanded','true'); requestAnimationFrame(function(){ drawer.querySelector('.backdrop').style.opacity = 1; }); }
+  function close(){ drawer.dataset.open = 'false'; drawer.setAttribute('aria-hidden','true'); burger.setAttribute('aria-expanded','false'); var bd = drawer.querySelector('.backdrop'); if(bd) bd.style.opacity = 0; }
+  burger.addEventListener('click', function(e){ e.preventDefault(); open(); });
+  drawer.addEventListener('click', function(e){
+    if(e.target.closest('[data-close]')){ e.preventDefault(); close(); return; }
+    var a = e.target.closest('a[href^="#"]');
+    if(a){ close(); /* nu prevenim default, lăsăm browserul să facă scroll ținând cont de scroll-padding-top */ }
+  });
+  window.addEventListener('keydown', function(e){ if(e.key === 'Escape') close(); });
+  // Auto-close la resize pe desktop
+  var MQ = window.matchMedia ? window.matchMedia('(min-width:901px)') : null;
+  if(MQ){
+    if(MQ.addEventListener) MQ.addEventListener('change', function(ev){ if(ev.matches) close(); });
+    else if(MQ.addListener) MQ.addListener(function(ev){ if(ev.matches) close(); });
+  }
+})();
+</script>
+</body>
+</html>
